@@ -1,0 +1,431 @@
+:root {
+  --pitch: #123524;
+  --pitch-deep: #0B211A;
+  --chalk: #F4F1E9;
+  --amber: #F2B705;
+  --turf-line: #7FA08D;
+  --muted: #A9C2B3;
+  --rust: #C4522B;
+  --card: #16402C;
+  --card-line: rgba(244, 241, 233, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--pitch-deep);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 96px);
+  color: var(--chalk);
+  font-family: "Inter", system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Topbar ---------- */
+
+.topbar {
+  border-bottom: 1px solid var(--card-line);
+  background: var(--pitch);
+}
+
+.topbar-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: "Oswald", sans-serif;
+}
+
+.brand-mark {
+  color: var(--amber);
+  letter-spacing: 2px;
+  font-size: 10px;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  color: var(--turf-line);
+  font-size: 12px;
+  margin-left: 6px;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.nav-link {
+  color: var(--muted);
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+}
+
+.nav-link:hover { color: var(--chalk); }
+
+.nav-link.active {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+.nav-logout { color: var(--rust); }
+
+.nav-user {
+  color: var(--chalk);
+  font-weight: 600;
+  border-left: 1px solid var(--card-line);
+  padding-left: 20px;
+}
+
+.tag {
+  font-family: "Roboto Mono", monospace;
+  font-size: 10px;
+  background: var(--amber);
+  color: var(--pitch-deep);
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  vertical-align: middle;
+}
+
+/* ---------- Page shell ---------- */
+
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  flex: 1;
+  width: 100%;
+}
+
+.foot {
+  text-align: center;
+  padding: 20px;
+  color: var(--turf-line);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- Flash messages ---------- */
+
+.flash-stack {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flash {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  border-left: 3px solid;
+}
+
+.flash-success { background: rgba(127,160,141,0.15); border-color: var(--turf-line); }
+.flash-error   { background: rgba(196,82,43,0.15); border-color: var(--rust); }
+.flash-info    { background: rgba(244,241,233,0.08); border-color: var(--muted); }
+
+/* ---------- Headings ---------- */
+
+h1, h2, h3 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0 0 6px;
+}
+
+h1 { font-size: 30px; }
+h2 { font-size: 20px; }
+
+.eyebrow {
+  font-family: "Roboto Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.section-head {
+  margin-bottom: 20px;
+}
+
+.section-head p {
+  color: var(--muted);
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+/* ---------- Cards / fixtures ---------- */
+
+.card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.match-card {
+  background: var(--card);
+  border: 1px solid var(--card-line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.match-teams {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.vs {
+  color: var(--turf-line);
+  font-size: 13px;
+  font-family: "Roboto Mono", monospace;
+}
+
+.match-meta {
+  color: var(--muted);
+  font-size: 12px;
+  font-family: "Roboto Mono", monospace;
+  margin-top: 4px;
+}
+
+.match-side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.scoreboard {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 700;
+  font-size: 22px;
+  background: var(--pitch-deep);
+  border: 1px solid var(--card-line);
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: var(--amber);
+  min-width: 64px;
+  text-align: center;
+}
+
+.pill {
+  font-family: "Roboto Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.pill-open { background: rgba(127,160,141,0.2); color: var(--turf-line); }
+.pill-locked { background: rgba(169,194,179,0.15); color: var(--muted); }
+.pill-done { background: rgba(242,183,5,0.15); color: var(--amber); }
+.pill-exact { background: rgba(242,183,5,0.2); color: var(--amber); }
+.pill-partial { background: rgba(127,160,141,0.2); color: var(--turf-line); }
+.pill-zero { background: rgba(196,82,43,0.12); color: var(--rust); }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn-primary { background: var(--amber); color: var(--pitch-deep); }
+.btn-primary:hover { background: #ffcb2e; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--chalk);
+  border-color: var(--card-line);
+}
+.btn-ghost:hover { border-color: var(--muted); }
+
+.btn-danger {
+  background: transparent;
+  color: var(--rust);
+  border-color: rgba(196,82,43,0.4);
+}
+.btn-danger:hover { background: rgba(196,82,43,0.12); }
+
+.btn-block { width: 100%; text-align: center; }
+
+/* ---------- Forms ---------- */
+
+.form-card {
+  background: var(--card);
+  border: 1px solid var(--card-line);
+  border-radius: 10px;
+  padding: 28px;
+  max-width: 440px;
+}
+
+.field { margin-bottom: 16px; }
+
+.field label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="number"],
+.field input[type="datetime-local"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--card-line);
+  background: var(--pitch-deep);
+  color: var(--chalk);
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+}
+
+.field input:focus {
+  outline: 2px solid var(--amber);
+  outline-offset: 1px;
+}
+
+.score-inputs {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.score-inputs .field { flex: 1; margin-bottom: 0; }
+
+.score-inputs input {
+  text-align: center;
+  font-family: "Roboto Mono", monospace;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.score-vs {
+  font-family: "Roboto Mono", monospace;
+  color: var(--turf-line);
+  padding-top: 20px;
+}
+
+.form-foot {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.form-foot a { color: var(--amber); font-weight: 600; }
+
+.auth-shell {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+/* ---------- Table ---------- */
+
+table.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--card-line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table.leaderboard th, table.leaderboard td {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 14px;
+}
+
+table.leaderboard th {
+  font-family: "Roboto Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--card-line);
+}
+
+table.leaderboard tr:not(:last-child) td {
+  border-bottom: 1px solid var(--card-line);
+}
+
+table.leaderboard td.rank {
+  font-family: "Roboto Mono", monospace;
+  color: var(--amber);
+  font-weight: 700;
+}
+
+table.leaderboard td.points {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.row-self {
+  background: rgba(242,183,5,0.06);
+}
+
+/* ---------- Empty state ---------- */
+
+.empty {
+  border: 1px dashed var(--card-line);
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ---------- Utility ---------- */
+
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.row { display: flex; align-items: center; gap: 10px; }
+.mt-32 { margin-top: 32px; }
+.text-muted { color: var(--muted); }

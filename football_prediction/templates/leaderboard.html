@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+
+<div class="section-head">
+  <span class="eyebrow">Standings</span>
+  <h1>Leaderboard</h1>
+  <p>3 points for an exact score, 1 point for the correct result, 0 otherwise.</p>
+</div>
+
+{% if ranked %}
+<table class="leaderboard">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Player</th>
+      <th>Predictions</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in ranked %}
+    <tr class="{{ 'row-self' if row.id == current_user.id else '' }}">
+      <td class="rank">{{ loop.index }}</td>
+      <td>{{ row.username }}{% if row.id == current_user.id %} <span class="text-muted">(you)</span>{% endif %}</td>
+      <td>{{ row.predictions_made }}</td>
+      <td class="points">{{ row.total_points }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty">No players yet.</div>
+{% endif %}
+
+{% endblock %}

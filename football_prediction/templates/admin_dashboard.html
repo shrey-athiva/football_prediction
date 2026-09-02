@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Admin · Fixtures{% endblock %}
+{% block content %}
+
+<div class="section-head row" style="justify-content: space-between;">
+  <div>
+    <span class="eyebrow">Admin</span>
+    <h1>Manage fixtures</h1>
+    <p>Add matches for users to predict, then enter the real result once played.</p>
+  </div>
+  <a href="{{ url_for('admin_add_match') }}" class="btn btn-primary">+ Add match</a>
+</div>
+
+{% if matches %}
+<div class="card-grid">
+  {% for match in matches %}
+  <div class="match-card">
+    <div>
+      <div class="match-teams">
+        {{ match.home_team }} <span class="vs">vs</span> {{ match.away_team }}
+      </div>
+      <div class="match-meta">Kicks off {{ match.kickoff_at.strftime('%a %d %b, %H:%M') }}</div>
+    </div>
+    <div class="match-side">
+      {% if match.status == 'completed' %}
+        <span class="scoreboard">{{ match.actual_home_score }}&ndash;{{ match.actual_away_score }}</span>
+        <span class="pill pill-done">Completed</span>
+        <a href="{{ url_for('admin_view_predictions', match_id=match.id) }}" class="btn btn-ghost">View predictions</a>
+      {% else %}
+        {% if match.is_locked %}
+          <span class="pill pill-locked">Kicked off</span>
+        {% else %}
+          <span class="pill pill-open">Open</span>
+        {% endif %}
+        <a href="{{ url_for('admin_enter_result', match_id=match.id) }}" class="btn btn-primary">Enter result</a>
+        <form method="POST" action="{{ url_for('admin_delete_match', match_id=match.id) }}"
+              onsubmit="return confirm('Delete this match and all its predictions?');">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">No matches yet. Add the first fixture to get started.</div>
+{% endif %}
+
+{% endblock %}

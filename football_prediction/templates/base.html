@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Matchday{% endblock %} · Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="brand-mark">&#9679;&#9675;&#9679;</span>
+      <span class="brand-name">MATCHDAY<span class="brand-sub">PREDICTOR</span></span>
+    </a>
+    {% if current_user.is_authenticated %}
+    <nav class="nav">
+      {% if current_user.is_admin %}
+        <a href="{{ url_for('admin_dashboard') }}" class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">Fixtures</a>
+      {% else %}
+        <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">Fixtures</a>
+        <a href="{{ url_for('leaderboard') }}" class="nav-link {% if request.endpoint == 'leaderboard' %}active{% endif %}">Leaderboard</a>
+      {% endif %}
+      <span class="nav-user">{{ current_user.username }}{% if current_user.is_admin %} <span class="tag">ADMIN</span>{% endif %}</span>
+      <a href="{{ url_for('logout') }}" class="nav-link nav-logout">Log out</a>
+    </nav>
+    {% endif %}
+  </div>
+</header>
+
+<main class="page">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="foot">
+  <span>Matchday Predictor &mdash; database systems coursework project</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Fixtures{% endblock %}
+{% block content %}
+
+<div class="section-head">
+  <span class="eyebrow">Open for predictions</span>
+  <h1>Upcoming fixtures</h1>
+  <p>Submit a scoreline before kickoff. Exact score = 3 pts, correct result = 1 pt.</p>
+</div>
+
+{% if upcoming %}
+<div class="card-grid">
+  {% for match in upcoming %}
+  <div class="match-card">
+    <div>
+      <div class="match-teams">
+        {{ match.home_team }} <span class="vs">vs</span> {{ match.away_team }}
+      </div>
+      <div class="match-meta">Kicks off {{ match.kickoff_at.strftime('%a %d %b, %H:%M') }}</div>
+    </div>
+    <div class="match-side">
+      {% set p = my_predictions.get(match.id) %}
+      {% if p %}
+        <span class="pill pill-open">You said {{ p.predicted_home_score }}&ndash;{{ p.predicted_away_score }}</span>
+      {% endif %}
+      <a href="{{ url_for('predict', match_id=match.id) }}" class="btn btn-primary">
+        {{ "Edit prediction" if p else "Predict" }}
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">No fixtures open for prediction right now. Check back once the admin posts new matches.</div>
+{% endif %}
+
+<div class="section-head mt-32">
+  <span class="eyebrow">Closed</span>
+  <h2>Locked &amp; completed fixtures</h2>
+</div>
+
+{% if locked_or_done %}
+<div class="card-grid">
+  {% for match in locked_or_done %}
+  <div class="match-card">
+    <div>
+      <div class="match-teams">
+        {{ match.home_team }} <span class="vs">vs</span> {{ match.away_team }}
+      </div>
+      <div class="match-meta">{{ match.kickoff_at.strftime('%a %d %b, %H:%M') }}</div>
+    </div>
+    <div class="match-side">
+      {% set p = my_predictions.get(match.id) %}
+      {% if match.status == 'completed' %}
+        <span class="scoreboard">{{ match.actual_home_score }}&ndash;{{ match.actual_away_score }}</span>
+        {% if p %}
+          {% if p.points == 3 %}
+            <span class="pill pill-exact">Your {{ p.predicted_home_score }}&ndash;{{ p.predicted_away_score }} &middot; Exact &middot; +3</span>
+          {% elif p.points == 1 %}
+            <span class="pill pill-partial">Your {{ p.predicted_home_score }}&ndash;{{ p.predicted_away_score }} &middot; Result &middot; +1</span>
+          {% else %}
+            <span class="pill pill-zero">Your {{ p.predicted_home_score }}&ndash;{{ p.predicted_away_score }} &middot; +0</span>
+          {% endif %}
+        {% else %}
+          <span class="pill pill-zero">No prediction submitted</span>
+        {% endif %}
+      {% else %}
+        <span class="pill pill-locked">Locked</span>
+        {% if p %}
+          <span class="pill pill-open">You said {{ p.predicted_home_score }}&ndash;{{ p.predicted_away_score }}</span>
+        {% else %}
+          <span class="pill pill-zero">No prediction submitted</span>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">Nothing here yet.</div>
+{% endif %}
+
+{% endblock %}

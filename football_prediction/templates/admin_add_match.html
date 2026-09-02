@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Add match{% endblock %}
+{% block content %}
+
+<div class="section-head">
+  <span class="eyebrow">Admin</span>
+  <h1>Add a fixture</h1>
+</div>
+
+<div class="form-card">
+  <form method="POST">
+    <div class="field">
+      <label for="home_team">Home team</label>
+      <input type="text" id="home_team" name="home_team" value="{{ home_team or '' }}" required autofocus>
+    </div>
+    <div class="field">
+      <label for="away_team">Away team</label>
+      <input type="text" id="away_team" name="away_team" value="{{ away_team or '' }}" required>
+    </div>
+    <div class="field">
+      <label for="kickoff_at">Kickoff date &amp; time</label>
+      <input type="datetime-local" id="kickoff_at" name="kickoff_at" value="{{ kickoff_at or '' }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Add match</button>
+  </form>
+</div>
+
+<p class="form-foot"><a href="{{ url_for('admin_dashboard') }}">&larr; Back to fixtures</a></p>
+
+{% endblock %}
